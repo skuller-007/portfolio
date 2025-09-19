@@ -16,8 +16,21 @@ import {
   Download,
   Target,
   Brain,
-  Zap
+  Zap,
+  Cloud,
+  Cpu,
+  Factory,
+  Truck,
+  Database,
+  Settings,
+  Gauge,
+  Layers,
+  Workflow,
+  Cog,
+  Lightbulb,
+  Activity
 } from 'lucide-react';
+import { certificates, certificateCategories } from '../data/certificates';
 
 const Certifications: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,7 +49,7 @@ const Certifications: React.FC = () => {
       { name: "Using Lean to Perfect Organizational Processes", provider: "Skillsoft", year: "2024", verified: true },
       { name: "Quality & Procurement Planning", provider: "Skillsoft", year: "2024", verified: true }
     ],
-    "Project Management": [
+    "Project Management - Skillsoft": [
       { name: "Fundamentals of Agile & Waterfall Project Management", provider: "Skillsoft", year: "2024", verified: true },
       { name: "Strategically Focused Project Management", provider: "Skillsoft", year: "2024", verified: true },
       { name: "Project Management Practical Exercises", provider: "Skillsoft", year: "2024", verified: true },
@@ -85,10 +98,22 @@ const Certifications: React.FC = () => {
       { name: "Prevention of Sexual Harassment at the Workplace", provider: "Hero MotoCorp", year: "2024", score: "90%", verified: true },
       { name: "Induction Safety HM1D", provider: "Hero MotoCorp", year: "2024", verified: true },
       { name: "Hero Code of Conduct", provider: "Hero MotoCorp", year: "2023", score: "80%", verified: true }
-    ]
+    ],
+    // Additional comprehensive certifications
+    "Cloud & AI": certificates.filter(cert => cert.category === 'Cloud & AI'),
+    "IoT & Cloud": certificates.filter(cert => cert.category === 'IoT & Cloud'),
+    "Manufacturing": certificates.filter(cert => cert.category === 'Manufacturing'),
+    "Supply Chain": certificates.filter(cert => cert.category === 'Supply Chain'),
+    "Data Science": certificates.filter(cert => cert.category === 'Data Science'),
+    "Quality Management": certificates.filter(cert => cert.category === 'Quality Management'),
+    "Operations": certificates.filter(cert => cert.category === 'Operations'),
+    "Project Management": certificates.filter(cert => cert.category === 'Project Management'),
+    "Smart Manufacturing": certificates.filter(cert => cert.category === 'Smart Manufacturing'),
+    "Internship": certificates.filter(cert => cert.category === 'Internship'),
+    "Language Proficiency": certificates.filter(cert => cert.category === 'Language Proficiency')
   };
 
-  const categories = ['All', ...Object.keys(certificationData)];
+  const categories = ['All', ...Object.keys(certificationData).filter(cat => !cat.startsWith('//'))];
 
   const allCertifications = useMemo(() => {
     return Object.entries(certificationData).flatMap(([category, certs]) =>
@@ -118,12 +143,21 @@ const Certifications: React.FC = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "Six Sigma & Quality": return BarChart3;
+      case "Project Management - Skillsoft": return Target;
       case "Project Management": return Target;
       case "Operations & Supply Chain": return TrendingUp;
       case "Leadership & Management": return Users;
       case "Process Automation": return Zap;
       case "Problem Solving & Analytics": return Brain;
       case "Workplace Safety & Compliance": return Shield;
+      case "Cloud & AI": return Cloud;
+      case "IoT & Cloud": return Cpu;
+      case "Manufacturing": return Factory;
+      case "Supply Chain": return Truck;
+      case "Data Science": return Database;
+      case "Quality Management": return Settings;
+      case "Operations": return Gauge;
+      case "Smart Manufacturing": return Layers;
       default: return Award;
     }
   };
@@ -237,8 +271,8 @@ const Certifications: React.FC = () => {
                   selectedCategory === category ? getCategoryColor(category) : 'bg-card border-border hover:bg-muted'
                 }`}
               >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-white/80 flex items-center justify-center">
-                  <IconComponent className="w-6 h-6" />
+                <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center border border-emerald-500/30">
+                  <IconComponent className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <h3 className="font-semibold mb-2 text-sm">
                   {category}
@@ -284,8 +318,8 @@ const Certifications: React.FC = () => {
                       className="p-6 hover:bg-muted/50 transition-colors"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <IconComponent className="w-5 h-5 text-primary" />
+                        <div className="w-10 h-10 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
+                          <IconComponent className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                         </div>
                         <div className="flex-1">
                           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-2">
@@ -419,7 +453,7 @@ const Certifications: React.FC = () => {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-contrast rounded-lg font-medium hover:bg-primary/90 transition-colors"
               >
                 <Calendar className="w-5 h-5" />
-                Schedule Consultation
+                Contact Me
               </motion.a>
               <motion.a
                 href="/projects"

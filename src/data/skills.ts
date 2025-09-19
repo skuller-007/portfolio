@@ -14,19 +14,28 @@ export const skills: SkillCategory[] = [
   {
     name: "Manufacturing Excellence",
     skills: [
-      { name: "Operational Excellence", level: 5, description: "TPM, Kaizen, DMS, Lean Methodology, OEE optimization", icon: "🏭" },
-      { name: "Process Improvement", level: 5, description: "Advanced Manufacturing, Process Design, Digital Manufacturing", icon: "⚙️" },
-      { name: "Quality Engineering", level: 4, description: "GD&T, CMM, FMEA, Process Capability Studies", icon: "📊" },
-      { name: "Supply Chain Optimization", level: 4, description: "Inventory Planning, JIT, Blockchain Transparency", icon: "🔗" }
+      { name: "TPM Methodology", level: 8, description: "JIPM-trained, TPM Special Award recipient, 83% downtime reduction achieved", icon: "🏭" },
+      { name: "Six Sigma DMAIC", level: 7, description: "Yellow Belt certified, multiple projects, ₹9M+ cost savings", icon: "⚙️" },
+      { name: "Lean Manufacturing", level: 7, description: "Extensive Skillsoft training, Kaizen implementation, 20% cycle time improvement", icon: "📊" },
+      { name: "Process Improvement", level: 6, description: "Advanced Manufacturing, Process Design, Digital Manufacturing", icon: "🔗" }
+    ]
+  },
+  {
+    name: "Enterprise Systems",
+    skills: [
+      { name: "SAP ERP", level: 8, description: "MRP optimization, PM scheduling, 2+ years experience at Hero MotoCorp", icon: "🏢" },
+      { name: "Simio Simulation", level: 7, description: "Teaching-level expertise, Course Assistant at Northeastern University", icon: "💻" },
+      { name: "SCADA Systems", level: 6, description: "Hero MotoCorp implementation and operation, real-time monitoring", icon: "🌐" },
+      { name: "MATLAB/Simulink", level: 8, description: "Research publications, control system design, EDM controller studies", icon: "🎛️" }
     ]
   },
   {
     name: "Automation & Systems",
     skills: [
-      { name: "PLC & HMI Programming", level: 5, description: "Siemens TIA, GX Works, Ladder Logic, Control Systems", icon: "🤖" },
-      { name: "Industrial Software", level: 4, description: "MATLAB, Simio, SolidWorks, AutoCAD, SAP ERP", icon: "💻" },
-      { name: "IoT & Smart Systems", level: 4, description: "Embedded Systems, IIoT, Smart Manufacturing", icon: "🌐" },
-      { name: "Control Design", level: 4, description: "PID Loop Tuning, Control Design, Real-time Systems", icon: "🎛️" }
+      { name: "PLC & HMI Programming", level: 7, description: "Siemens TIA, GX Works, Ladder Logic, 15% efficiency boost achieved", icon: "🤖" },
+      { name: "Industrial Software", level: 6, description: "SolidWorks, AutoCAD, SAP ERP integration", icon: "💻" },
+      { name: "IoT & Smart Systems", level: 6, description: "Smart Cell Dashboard, 11% availability improvement", icon: "🌐" },
+      { name: "Control Design", level: 7, description: "PID Loop Tuning, LQR Control, 15-20% precision improvement", icon: "🎛️" }
     ]
   },
   {

@@ -1,113 +1,47 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  message?: string;
-}
+import { useForm, ValidationError } from '@formspree/react';
 
 const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    message: ''
-  });
-  
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [state, handleSubmit] = useForm("xzzanvdl");
   const [honeypot, setHoneypot] = useState(''); // Honeypot field for spam protection
 
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters long';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Check honeypot
-    if (honeypot) {
-      return; // Silent fail for bots
-    }
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          userAgent: navigator.userAgent,
-          pageUrl: window.location.href
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        setErrors({});
-      } else {
-        setSubmitStatus('error');
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: undefined
-      }));
-    }
-  };
+  // Show success message if form was submitted successfully
+  if (state.succeeded) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-2xl mx-auto text-center"
+      >
+        <div className="p-8 bg-accent-1/10 border border-accent-1/20 rounded-xl">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="w-16 h-16 bg-accent-1 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </motion.div>
+          <h3 className="text-2xl font-bold text-foreground mb-2">Message Sent Successfully!</h3>
+          <p className="text-muted-foreground mb-4">
+            Thank you for reaching out. I'll get back to you within 24 hours.
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => window.location.reload()}
+            className="px-6 py-2 bg-primary text-primary-contrast rounded-lg font-medium hover:bg-primary/90 transition-colors"
+          >
+            Send Another Message
+          </motion.button>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -136,19 +70,17 @@ const ContactForm: React.FC = () => {
             type="text"
             id="name"
             name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-              errors.name 
-                ? 'border-accent-2 bg-accent-2/5' 
-                : 'border-border bg-card'
-            }`}
+            className="w-full px-4 py-3 border border-border bg-card rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
             placeholder="Your full name"
-            disabled={isSubmitting}
+            disabled={state.submitting}
+            required
           />
-          {errors.name && (
-            <p className="mt-1 text-sm text-accent-2">{errors.name}</p>
-          )}
+          <ValidationError 
+            prefix="Name" 
+            field="name"
+            errors={state.errors}
+            className="mt-1 text-sm text-accent-2"
+          />
         </div>
 
         <div>
@@ -159,19 +91,17 @@ const ContactForm: React.FC = () => {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-              errors.email 
-                ? 'border-accent-2 bg-accent-2/5' 
-                : 'border-border bg-card'
-            }`}
+            className="w-full px-4 py-3 border border-border bg-card rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
             placeholder="your.email@example.com"
-            disabled={isSubmitting}
+            disabled={state.submitting}
+            required
           />
-          {errors.email && (
-            <p className="mt-1 text-sm text-accent-2">{errors.email}</p>
-          )}
+          <ValidationError 
+            prefix="Email" 
+            field="email"
+            errors={state.errors}
+            className="mt-1 text-sm text-accent-2"
+          />
         </div>
 
         <div>
@@ -181,55 +111,42 @@ const ContactForm: React.FC = () => {
           <textarea
             id="message"
             name="message"
-            value={formData.message}
-            onChange={handleChange}
             rows={6}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-vertical ${
-              errors.message 
-                ? 'border-accent-2 bg-accent-2/5' 
-                : 'border-border bg-card'
-            }`}
+            className="w-full px-4 py-3 border border-border bg-card rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-vertical"
             placeholder="Tell me about your project, collaboration opportunity, or just say hello..."
-            disabled={isSubmitting}
+            disabled={state.submitting}
+            required
           />
-          {errors.message && (
-            <p className="mt-1 text-sm text-accent-2">{errors.message}</p>
-          )}
+          <ValidationError 
+            prefix="Message" 
+            field="message"
+            errors={state.errors}
+            className="mt-1 text-sm text-accent-2"
+          />
         </div>
 
         <motion.button
           type="submit"
-          disabled={isSubmitting}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          disabled={state.submitting}
+          whileHover={{ scale: state.submitting ? 1 : 1.02 }}
+          whileTap={{ scale: state.submitting ? 1 : 0.98 }}
           className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
-            isSubmitting
+            state.submitting
               ? 'bg-muted text-muted-foreground cursor-not-allowed'
               : 'bg-primary text-primary-contrast hover:bg-primary/90'
           }`}
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {state.submitting ? 'Sending...' : 'Send Message'}
         </motion.button>
 
-        {submitStatus === 'success' && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-accent-1/10 border border-accent-1/20 rounded-lg text-accent-1"
-          >
-            <p className="font-medium">Message sent!</p>
-            <p className="text-sm">Thank you for reaching out. I'll get back to you soon.</p>
-          </motion.div>
-        )}
-
-        {submitStatus === 'error' && (
+        {state.errors && state.errors.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="p-4 bg-accent-2/10 border border-accent-2/20 rounded-lg text-accent-2"
           >
             <p className="font-medium">Failed to send message</p>
-            <p className="text-sm">Please try again or contact me directly at ajithsrikanth.f@northeastern.edu</p>
+            <p className="text-sm">Please check the form and try again.</p>
           </motion.div>
         )}
       </form>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import TechnicalTooltip from '../components/TechnicalTooltip';
 import { 
   GraduationCap,
   Briefcase,
@@ -16,10 +17,19 @@ import {
   Building,
   Wrench,
   Brain,
-  Zap
+  Zap,
+  CheckCircle,
+  Calendar
 } from 'lucide-react';
 
 const About: React.FC = () => {
+  const professionalStatus = {
+    workAuthorization: "F-1 Student Visa with OPT and STEM OPT eligibility until 2029",
+    availability: "Full-time opportunities from December 2026, Pre-OPT available on discussion",
+    location: "Boston, MA with relocation flexibility nationwide",
+    clearanceEligible: "Eligible for security clearance processes if required"
+  };
+
   const currentWork = {
     primary: {
       title: "Manufacturing Engineering Intern",
@@ -52,40 +62,60 @@ const About: React.FC = () => {
       period: "2018-2022",
       focus: "Mechatronics Engineering & Core Concepts",
       achievements: [
-        "B.Tech Mechatronics (GPA 3.68)",
-        "Control Systems & IIoT expertise",
-        "Research publications in EDM controllers",
-        "Merit-based scholarship recipient"
+        "B.Tech Mechatronics (GPA 3.68) - SRM Institute of Science and Technology",
+        "Merit-based scholarship recipient for academic excellence",
+        "Research publications in EDM controllers and control systems",
+        "Final year project on IIoT-based manufacturing systems",
+        "Active participation in technical symposiums and competitions"
       ],
-      technologies: ["MATLAB", "SolidWorks", "PLC Programming", "Control Systems"],
+      technologies: ["MATLAB", "SolidWorks", "PLC Programming", "Control Systems", "Arduino", "Raspberry Pi"],
       icon: BookOpen,
       color: "bg-blue-500"
     },
     {
       phase: "Industrial Application",
       period: "2022-2024", 
-      focus: "Manufacturing Excellence & Team Leadership",
+      focus: "Manufacturing Excellence & Team Leadership at Hero MotoCorp",
       achievements: [
-        "Led 25+ member teams across multiple plants",
-        "TPM Special Award for maintenance excellence",
-        "Managed Vida EV production line tools",
-        "Delivered 36+ hours of technical training"
+        "Led 25+ member cross-functional teams across multiple manufacturing plants",
+        <TechnicalTooltip term="TPM (Total Productive Maintenance)" definition="A systematic approach to equipment maintenance that aims to maximize equipment effectiveness and eliminate breakdowns." example="Like regularly maintaining your car to prevent breakdowns - oil changes, tire rotations, and check-ups keep it running smoothly." industry="Manufacturing" icon="🔧">
+          TPM Special Award for maintenance excellence and process optimization
+        </TechnicalTooltip>,
+        "Managed Vida EV production line tools and equipment worth ₹50M+",
+        "Delivered 36+ hours of technical training to 200+ engineers",
+        <TechnicalTooltip term="Downtime Reduction" definition="The process of minimizing the time when equipment or systems are not operational due to maintenance, breakdowns, or other issues." example="Like reducing the time your car spends in the repair shop - the less time it's broken, the more you can use it productively." industry="Manufacturing" icon="⏱️">
+          Achieved 83% downtime reduction through predictive maintenance implementation
+        </TechnicalTooltip>,
+        "Generated ₹9M+ annual savings through supply chain efficiency initiatives"
       ],
-      technologies: ["SAP", "SCADA", "IoT Sensors", "Automation Systems"],
+      technologies: ["SAP", "SCADA", "IoT Sensors", "Automation Systems", 
+        <TechnicalTooltip term="TPM" definition="Total Productive Maintenance - A systematic approach to equipment maintenance that aims to maximize equipment effectiveness and eliminate breakdowns." example="Like regularly maintaining your car to prevent breakdowns - oil changes, tire rotations, and check-ups keep it running smoothly." industry="Manufacturing" icon="🔧">
+          TPM
+        </TechnicalTooltip>, 
+        <TechnicalTooltip term="Six Sigma" definition="A data-driven methodology for eliminating defects and improving quality in processes." example="Like ensuring 99.99966% of your products are perfect - if you made 1 million products, only 3.4 would be defective." industry="Quality Management" icon="📊">
+          Six Sigma
+        </TechnicalTooltip>, 
+        <TechnicalTooltip term="Lean Manufacturing" definition="A methodology focused on minimizing waste while maximizing productivity and value for customers." example="Like organizing your kitchen - removing unused items, arranging tools efficiently, and having everything you need within reach." industry="Manufacturing" icon="♻️">
+          Lean Manufacturing
+        </TechnicalTooltip>
+      ],
       icon: Wrench,
       color: "bg-green-500"
     },
     {
-      phase: "AI Innovation",
+      phase: "AI Innovation & Education",
       period: "2024-Present",
-      focus: "Intelligent Manufacturing & Advanced Analytics",
+      focus: "Intelligent Manufacturing, Teaching & Sustainability",
       achievements: [
-        "Developed Mano-AI troubleshooting assistant",
-        "IoT Smart Cell dashboard implementation", 
-        "Advanced simulation modeling expertise",
-        "Teaching and mentoring emerging engineers"
+        "Developed Mano-AI troubleshooting assistant using LLaMA and edge computing",
+        "IoT Smart Cell dashboard implementation with 11% availability improvement",
+        "Advanced simulation modeling expertise with Simio and MATLAB",
+        "Teaching and mentoring emerging engineers at Northeastern University",
+        "Sustainable manufacturing initiatives at VAN DYK Recycling Solutions",
+        "Course Assistant for Advanced Manufacturing and Simulation Analysis",
+        "LEAD360 Teaching Assistant for leadership development programs"
       ],
-      technologies: ["LLaMA", "Docker", "AWS IoT", "Simio", "Python"],
+      technologies: ["LLaMA", "Docker", "AWS IoT", "Simio", "Python", "Sustainable Manufacturing", "Edge Computing", "LLM Fine-tuning"],
       icon: Brain,
       color: "bg-purple-500"
     }
@@ -140,10 +170,45 @@ const About: React.FC = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Technical Journey
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
             From mechatronics foundations to AI-driven manufacturing solutions - 
             a continuous evolution in engineering excellence
           </p>
+          
+          {/* Availability Status */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20 rounded-full px-6 py-3 mb-8"
+          >
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.7, 1, 0.7]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="w-3 h-3 bg-emerald-500 rounded-full"
+            />
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+              Available from December 2026 for Full-time Roles
+            </span>
+            <motion.span
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                delay: 1
+              }}
+              className="text-emerald-500"
+            >
+              🚀
+            </motion.span>
+          </motion.div>
         </motion.div>
 
         {/* Current Work Focus */}
@@ -175,7 +240,7 @@ const About: React.FC = () => {
                     {work.title}
                   </h3>
                   <div className="text-primary font-medium mb-1">{work.company}</div>
-                  {work.course && (
+                  {'course' in work && work.course && (
                     <div className="text-sm text-muted-foreground mb-2">{work.course}</div>
                   )}
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
@@ -199,12 +264,32 @@ const About: React.FC = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
+          <motion.h2 
+            className="text-2xl font-bold text-foreground mb-8 text-center"
+            whileHover={{ 
+              scale: 1.05,
+              textShadow: "0 0 20px rgba(16, 185, 129, 0.3)"
+            }}
+          >
             Technical Evolution
-          </h2>
+            <motion.span
+              className="ml-2"
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              ⚡
+            </motion.span>
+          </motion.h2>
           <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-border hidden lg:block"></div>
+            {/* Enhanced Timeline Line with Gradient */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-emerald-500 via-cyan-500 to-purple-500 hidden lg:block rounded-full shadow-lg"></div>
             
             <div className="space-y-8">
               {technicalEvolution.map((phase, index) => {
@@ -220,37 +305,137 @@ const About: React.FC = () => {
                       index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
                     }`}
                   >
-                    {/* Content Card */}
-                    <div className="flex-1 bg-card border border-border rounded-xl p-6 max-w-lg">
+                    {/* Content Card with Glassmorphic Effect */}
+                    <motion.div 
+                      className="flex-1 glass-card border border-white/20 rounded-2xl p-6 max-w-lg backdrop-blur-sm"
+                      whileHover={{ 
+                        scale: 1.02,
+                        boxShadow: "0 20px 40px rgba(16, 185, 129, 0.1)"
+                      }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                    >
                       <div className="flex items-center gap-3 mb-4">
-                        <div className={`w-10 h-10 ${phase.color} rounded-lg flex items-center justify-center`}>
-                          <IconComponent className="w-5 h-5 text-white" />
-                        </div>
+                        <motion.div 
+                          className={`w-12 h-12 ${phase.color} rounded-xl flex items-center justify-center shadow-lg`}
+                          whileHover={{ 
+                            rotate: 360,
+                            scale: 1.1
+                          }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <IconComponent className="w-6 h-6 text-white" />
+                        </motion.div>
                         <div>
-                          <h3 className="text-xl font-semibold text-foreground">{phase.phase}</h3>
-                          <div className="text-sm text-muted-foreground">{phase.period}</div>
+                          <h3 className="text-xl font-semibold text-slate-800 dark:text-white">{phase.phase}</h3>
+                          <div className="text-sm text-slate-600 dark:text-slate-300">{phase.period}</div>
                         </div>
+                        {/* Easter egg sparkle */}
+                        <motion.div
+                          className="ml-auto"
+                          animate={{ 
+                            rotate: [0, 180, 360],
+                            scale: [1, 1.2, 1]
+                          }}
+                          transition={{ 
+                            duration: 4,
+                            repeat: Infinity,
+                            delay: index * 0.5
+                          }}
+                        >
+                          ✨
+                        </motion.div>
                       </div>
-                      <p className="text-muted-foreground mb-4">{phase.focus}</p>
-                      <div className="space-y-2 mb-4">
+                      <p className="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">{phase.focus}</p>
+                      <div className="space-y-3 mb-6">
                         {phase.achievements.map((achievement, idx) => (
-                          <div key={idx} className="flex items-start gap-2">
-                            <CheckCircle className="w-4 h-4 text-accent-1 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-foreground">{achievement}</span>
-                          </div>
+                          <motion.div 
+                            key={idx} 
+                            className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors duration-200"
+                            whileHover={{ x: 5 }}
+                          >
+                            <motion.div
+                              animate={{ 
+                                scale: [1, 1.2, 1],
+                                opacity: [0.7, 1, 0.7]
+                              }}
+                              transition={{ 
+                                duration: 2,
+                                repeat: Infinity,
+                                delay: idx * 0.2
+                              }}
+                            >
+                              <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                            </motion.div>
+                            <span className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">{achievement}</span>
+                          </motion.div>
                         ))}
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {phase.technologies.map((tech) => (
-                          <span key={tech} className="px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full">
+                        {phase.technologies.map((tech, techIdx) => (
+                          <motion.span 
+                            key={tech} 
+                            className="px-3 py-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-600 dark:text-emerald-400 text-xs rounded-full border border-emerald-500/30 hover:shadow-md transition-all duration-200"
+                            whileHover={{ 
+                              scale: 1.05,
+                              boxShadow: "0 4px 12px rgba(16, 185, 129, 0.2)"
+                            }}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: techIdx * 0.1 }}
+                          >
                             {tech}
-                          </span>
+                          </motion.span>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Timeline Node */}
-                    <div className="hidden lg:block w-6 h-6 bg-primary rounded-full border-4 border-bg shadow-lg z-10"></div>
+                    {/* Enhanced Timeline Node */}
+                    <motion.div 
+                      className="hidden lg:block w-8 h-8 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-full border-4 border-white dark:border-slate-800 shadow-xl z-10"
+                      whileHover={{ 
+                        scale: 1.3,
+                        boxShadow: "0 0 20px rgba(16, 185, 129, 0.5)"
+                      }}
+                      animate={{ 
+                        scale: [1, 1.1, 1],
+                        boxShadow: [
+                          "0 0 0px rgba(16, 185, 129, 0)",
+                          "0 0 10px rgba(16, 185, 129, 0.3)",
+                          "0 0 0px rgba(16, 185, 129, 0)"
+                        ]
+                      }}
+                      transition={{ 
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <motion.div
+                        className="w-full h-full rounded-full bg-white/20 flex items-center justify-center"
+                        animate={{ rotate: 360 }}
+                        transition={{ 
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "linear"
+                        }}
+                      >
+                        <motion.span
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            opacity: [0.7, 1, 0.7]
+                          }}
+                          transition={{ 
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: index * 0.3
+                          }}
+                        >
+                          ⚡
+                        </motion.span>
+                      </motion.div>
+                    </motion.div>
 
                     {/* Spacer for alternating layout */}
                     <div className="flex-1 max-w-lg"></div>
@@ -456,7 +641,7 @@ const About: React.FC = () => {
                       <p className="text-muted-foreground text-sm mb-4">{phase.focus}</p>
                       <div className="flex flex-wrap gap-1">
                         {phase.technologies.map((tech) => (
-                          <span key={tech} className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">
+                          <span key={tech} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20">
                             {tech}
                           </span>
                         ))}
@@ -477,6 +662,63 @@ const About: React.FC = () => {
                 </motion.div>
               );
             })}
+          </div>
+        </motion.div>
+
+        {/* Professional Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
+            Professional Status & Availability
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-card border border-border rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Award className="w-5 h-5 text-primary" />
+                Work Authorization
+              </h3>
+              <p className="text-muted-foreground mb-4">{professionalStatus.workAuthorization}</p>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent-1" />
+                  <span>Eligible for OPT (Optional Practical Training)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent-1" />
+                  <span>STEM OPT extension available until 2029</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-accent-1" />
+                  <span>Security clearance eligible if required</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-card border border-border rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-accent-1" />
+                Availability
+              </h3>
+              <p className="text-muted-foreground mb-4">{professionalStatus.availability}</p>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <span>Boston, MA with nationwide relocation flexibility</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-accent-2" />
+                  <span>Pre-OPT opportunities available on discussion</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-accent-1" />
+                  <span>Open to full-time and contract roles in manufacturing, automation, and AI</span>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
 

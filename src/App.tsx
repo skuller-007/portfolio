@@ -12,9 +12,11 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
+import Hobbies from './pages/Hobbies';
 import Writings from './pages/Writings';
 import Contact from './pages/Contact';
 import Certifications from './pages/Certifications';
+import Documents from './pages/Documents';
 import Resume from './pages/Resume';
 import NotFound from './pages/NotFound';
 
@@ -39,8 +41,10 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:slug" element={<ProjectDetail />} />
+                <Route path="/hobbies" element={<Hobbies />} />
                 <Route path="/writings" element={<Writings />} />
                 <Route path="/certifications" element={<Certifications />} />
+                <Route path="/documents" element={<Documents />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/resume" element={<Resume />} />
                 <Route path="*" element={<NotFound />} />

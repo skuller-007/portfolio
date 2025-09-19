@@ -1,0 +1,32 @@
+# Project Images Directory
+
+This directory should contain the following project images:
+
+## Hero MotoCorp Project Images:
+- hero-plant-overview.jpg - Overview of the manufacturing plant
+- scada-dashboard.jpg - SCADA dashboard showing real-time monitoring
+- tpm-award.jpg - TPM Special Award certificate/photo
+
+## Mano-AI Project Images:
+- mano-ai-interface.jpg - CLI interface screenshot
+- ai-architecture.jpg - System architecture diagram
+
+## VAN DYK Project Images:
+- van-dyk-facility.jpg - Recycling facility overview
+- recycling-process.jpg - Process optimization visualization
+
+## Northeastern Teaching Images:
+- simio-classroom.jpg - Virtual classroom session
+- student-projects.jpg - Student project examples
+
+## Research Images:
+- matlab-simulation.jpg - MATLAB simulation results
+- control-comparison.jpg - Control system comparison charts
+
+## Placeholder Images
+For now, you can use placeholder images from services like:
+- https://via.placeholder.com/800x600/0ea5e9/ffffff?text=Project+Image
+- https://picsum.photos/800/600
+- Or create your own project screenshots
+
+Replace these placeholder references with actual project images when available.

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import TechnicalTooltip from '../components/TechnicalTooltip';
 import { 
   ExternalLink, 
   Github, 
@@ -20,7 +21,10 @@ import {
   CheckCircle,
   ArrowUpRight,
   Clock,
-  Target
+  Target,
+  Lightbulb,
+  Wrench,
+  Layers
 } from 'lucide-react';
 
 const Projects: React.FC = () => {
@@ -29,6 +33,19 @@ const Projects: React.FC = () => {
   const [activeProject, setActiveProject] = useState(0);
 
   const categories = ['All', 'Hero MotoCorp', 'Northeastern', 'Research', 'Current Work'];
+
+  const tpmMethodology = {
+    certification: "JIPM (Japan Institute of Plant Maintenance) trained",
+    award: "TPM Special Award for excellence in Predictive Maintenance, 5S, and Zero Breakdowns",
+    implementation: {
+      "Autonomous Maintenance": "36+ hours operator training, equipment ownership development",
+      "Planned Maintenance": "SAP integration, SCADA-based predictive analytics", 
+      "Focused Improvement": "Kaizen projects, equipment modernization",
+      "Quality Maintenance": "Statistical process control, defect prevention",
+      "Training & Education": "Cross-functional team development, SOP creation"
+    },
+    results: "83% downtime reduction across 36 machines, ₹9M+ cost savings"
+  };
 
   const featuredProjects = [
     {
@@ -328,11 +345,80 @@ const Projects: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* TPM Methodology Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-16"
+        >
+          <div className="bg-gradient-to-r from-primary/5 to-accent-1/5 border border-primary/20 rounded-2xl p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                TPM Methodology Excellence
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                JIPM-trained Total Productive Maintenance implementation with proven results
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Award className="w-6 h-6 text-primary" />
+                  Certification & Recognition
+                </h3>
+                <div className="space-y-3">
+                  <div className="p-4 bg-card border border-border rounded-lg">
+                    <div className="font-medium text-foreground mb-1">JIPM Training</div>
+                    <div className="text-sm text-muted-foreground">{tpmMethodology.certification}</div>
+                  </div>
+                  <div className="p-4 bg-accent-1/10 border border-accent-1/20 rounded-lg">
+                    <div className="font-medium text-foreground mb-1">TPM Special Award</div>
+                    <div className="text-sm text-muted-foreground">{tpmMethodology.award}</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <TrendingUp className="w-6 h-6 text-accent-1" />
+                  Quantified Results
+                </h3>
+                <div className="p-4 bg-gradient-to-r from-accent-1/10 to-primary/10 border border-accent-1/20 rounded-lg">
+                  <div className="text-2xl font-bold text-foreground mb-2">{tpmMethodology.results}</div>
+                  <div className="text-sm text-muted-foreground">Across 36 machines in 2 manufacturing plants</div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold text-foreground mb-6 text-center">
+                TPM Implementation Framework
+              </h3>
+              <div className="grid md:grid-cols-3 gap-4">
+                {Object.entries(tpmMethodology.implementation).map(([pillar, description], index) => (
+                  <motion.div
+                    key={pillar}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="p-4 bg-card border border-border rounded-lg hover:shadow-lg transition-all"
+                  >
+                    <h4 className="font-semibold text-foreground mb-2">{pillar}</h4>
+                    <p className="text-sm text-muted-foreground">{description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Featured Projects */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="space-y-12"
         >
           <AnimatePresence mode="wait">
@@ -491,11 +577,78 @@ const Projects: React.FC = () => {
                       <div className="flex-1">
                         <h4 className="font-medium text-foreground mb-3">Technologies Used:</h4>
                         <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech) => (
-                            <span key={tech} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
-                              {tech}
-                            </span>
-                          ))}
+                          {project.technologies.map((tech) => {
+                            // Add tooltips for specific technical terms
+                            if (tech === 'TPM') {
+                              return (
+                                <TechnicalTooltip key={tech} term="TPM" definition="Total Productive Maintenance - A systematic approach to equipment maintenance that aims to maximize equipment effectiveness and eliminate breakdowns." example="Like regularly maintaining your car to prevent breakdowns - oil changes, tire rotations, and check-ups keep it running smoothly." industry="Manufacturing" icon="🔧">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            if (tech === 'Six Sigma') {
+                              return (
+                                <TechnicalTooltip key={tech} term="Six Sigma" definition="A data-driven methodology for eliminating defects and improving quality in processes." example="Like ensuring 99.99966% of your products are perfect - if you made 1 million products, only 3.4 would be defective." industry="Quality Management" icon="📊">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            if (tech === 'PLC Programming') {
+                              return (
+                                <TechnicalTooltip key={tech} term="PLC Programming" definition="Programmable Logic Controller programming - creating software to control industrial machinery and processes." example="Like writing instructions for a robot to follow specific steps in a manufacturing process." industry="Manufacturing" icon="🤖">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            if (tech === 'IoT Sensors') {
+                              return (
+                                <TechnicalTooltip key={tech} term="IoT Sensors" definition="Internet of Things sensors that collect data from equipment and send it to monitoring systems." example="Like fitness trackers for machines - they monitor health and performance in real-time." industry="Manufacturing" icon="📡">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            if (tech === 'LLaMA') {
+                              return (
+                                <TechnicalTooltip key={tech} term="LLaMA" definition="Large Language Model Meta AI - A powerful AI model that can understand and generate human-like text." example="Like having a very smart assistant that can read and understand technical manuals to help solve problems." industry="AI" icon="🧠">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            if (tech === 'RAG') {
+                              return (
+                                <TechnicalTooltip key={tech} term="RAG" definition="Retrieval-Augmented Generation - A technique that combines AI with specific knowledge to provide accurate answers." example="Like having an AI assistant that can look up information from a library before answering your questions." industry="AI" icon="🔍">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            if (tech === 'Prompt Engineering') {
+                              return (
+                                <TechnicalTooltip key={tech} term="Prompt Engineering" definition="The art and science of crafting effective instructions for AI models to get the best results." example="Like learning how to ask questions in the right way to get helpful answers from a smart assistant." industry="AI" icon="💬">
+                                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full cursor-help">
+                                    {tech}
+                                  </span>
+                                </TechnicalTooltip>
+                              );
+                            }
+                            // Default rendering for other technologies
+                            return (
+                              <span key={tech} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
+                                {tech}
+                              </span>
+                            );
+                          })}
                         </div>
                       </div>
                       

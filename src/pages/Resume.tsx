@@ -135,7 +135,7 @@ const Resume: React.FC = () => {
                   <Button href="/contact" size="lg">
                     Get In Touch
                   </Button>
-                  <Button href={profile.social.linkedin} target="_blank" variant="outline" size="lg">
+                  <Button href={profile.linkedin} target="_blank" variant="outline" size="lg">
                     Connect on LinkedIn
                   </Button>
                 </div>

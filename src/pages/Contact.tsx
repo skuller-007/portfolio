@@ -17,91 +17,111 @@ import {
   Globe
 } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
+import { testimonials, getFeaturedTestimonials } from '../data/testimonials';
+import TechnicalTooltip from '../components/TechnicalTooltip';
 
 const Contact: React.FC = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  // Real testimonials from LinkedIn recommendations
-  const testimonials = [
+  // Existing LinkedIn testimonials
+  const linkedinTestimonials = [
     {
       name: "Udit Vashistha",
       title: "Section Head - Production Engineering",
       company: "Hero MotoCorp",
       relationship: "Senior Colleague",
-      testimonial: "Ajith has worked with me for Digitization Scale up / Smart factory implementation in Hero Motocorp Ltd. He has in-depth understanding and interest in IOT, Manufacturing processes digitization, Maintenance Processes and Tool Engineering. He has demonstrated his ability to deliver the results as required and very minimal Intervention / follow ups are required with him, once directed, he does the things on his own. He is a good team player, quick learner, and challenger of status quo. Any organization / team would always like to have a person like him.",
+      content: "Ajith has worked with me for Digitization Scale up / Smart factory implementation in Hero Motocorp Ltd. He has in-depth understanding and interest in IOT, Manufacturing processes digitization, Maintenance Processes and Tool Engineering. He has demonstrated his ability to deliver the results as required and very minimal Intervention / follow ups are required with him, once directed, he does the things on his own. He is a good team player, quick learner, and challenger of status quo. Any organization / team would always like to have a person like him.",
+      rating: 5,
       avatar: "UV",
-      verified: true
+      verified: true,
+      category: 'Professional' as const,
+      date: '2024',
+      highlights: [
+        'IoT and digitization expertise',
+        'Minimal supervision required',
+        'Challenger of status quo',
+        'Excellent team player'
+      ]
     },
     {
       name: "Mahesh Babu Valleru", 
       title: "Sr. Manager of Operations - Electric Vehicle",
       company: "Hero MotoCorp",
       relationship: "Direct Manager",
-      testimonial: "Ajith is Passionate and dynamic professional. With 3 years of professional experience he has a commendable knowledge on IOT and Digitization with hands on experience in mechanics of the shop. which Felt a unique things where he understood the requirement of the production shop, which will helps him to execute the IOT with perfection. As an individual he is a continuous learner, where ever the opportunity comes, he will grab and try to learn the new things. Starting forward in nature, and He is Brotherhood person",
+      content: "Ajith is Passionate and dynamic professional. With 3 years of professional experience he has a commendable knowledge on IOT and Digitization with hands on experience in mechanics of the shop. which Felt a unique things where he understood the requirement of the production shop, which will helps him to execute the IOT with perfection. As an individual he is a continuous learner, where ever the opportunity comes, he will grab and try to learn the new things. Starting forward in nature, and He is Brotherhood person",
+      rating: 5,
       avatar: "MV",
-      verified: true
+      verified: true,
+      category: 'Professional' as const,
+      date: '2024',
+      highlights: [
+        'Passionate and dynamic',
+        'Hands-on shop experience',
+        'Continuous learner',
+        'Forward-thinking nature'
+      ]
     },
     {
       name: "Vivekanand Singh",
       title: "AGM Plant Maintenance & Operations",
       company: "Hero MotoCorp",
       relationship: "Direct Manager", 
-      testimonial: "I had the pleasure of working closely with Ajith Srikanth in Hero Motocorp, Haridwar Plant. He consistently impressed me with his exceptional professionalism, dedication and talent. He demonstrated a remarkable ability towards new learnings and initiatives, often exceeding expectations and delivering high-quality results under tight deadlines.",
+      content: "I had the pleasure of working closely with Ajith Srikanth in Hero Motocorp, Haridwar Plant. He consistently impressed me with his exceptional professionalism, dedication and talent. He demonstrated a remarkable ability towards new learnings and initiatives, often exceeding expectations and delivering high-quality results under tight deadlines.",
+      rating: 5,
       avatar: "VS",
-      verified: true
+      verified: true,
+      category: 'Professional' as const,
+      date: '2024',
+      highlights: [
+        'Exceptional professionalism',
+        'Exceeds expectations',
+        'High-quality results',
+        'Works under tight deadlines'
+      ]
     },
     {
       name: "Anoop Gupta",
       title: "Head - Engineering",
       company: "Hero MotoCorp", 
       relationship: "Senior Leadership",
-      testimonial: "Ajith is a very talented & hardworking person. In hero motocorp he has contributed a lot in Tool Engineering & Digitization projects. he has a good learning ability & agile. He delivers projects on time.",
+      content: "Ajith is a very talented & hardworking person. In hero motocorp he has contributed a lot in Tool Engineering & Digitization projects. he has a good learning ability & agile. He delivers projects on time.",
+      rating: 5,
       avatar: "AG",
-      verified: true
+      verified: true,
+      category: 'Professional' as const,
+      date: '2024',
+      highlights: [
+        'Talented and hardworking',
+        'Tool Engineering expertise',
+        'Good learning ability',
+        'On-time project delivery'
+      ]
     },
     {
       name: "Nehaa Vijayakumar",
       title: "Technophile | Digital Transformation",
       company: "Hero MotoCorp",
       relationship: "Peer Colleague",
-      testimonial: "Ajith is a modest and hardworking candidate with a thirst for exploring new technologies. Automation and control system attracts him the most. Ambitious and passionate about contributing in the field of Industry 4.0. Team player with immense managerial skills and efficient in showing progress. He is workaholic and an innovative thinker who is suitable for any work environment.",
+      content: "Ajith is a modest and hardworking candidate with a thirst for exploring new technologies. Automation and control system attracts him the most. Ambitious and passionate about contributing in the field of Industry 4.0. Team player with immense managerial skills and efficient in showing progress. He is workaholic and an innovative thinker who is suitable for any work environment.",
+      rating: 5,
       avatar: "NV",
-      verified: true
+      verified: true,
+      category: 'Professional' as const,
+      date: '2024',
+      highlights: [
+        'Thirst for new technologies',
+        'Industry 4.0 passion',
+        'Managerial skills',
+        'Innovative thinker'
+      ]
     }
   ];
 
-  const consultingServices = [
-    {
-      service: "Manufacturing Process Optimization",
-      description: "TPM implementation, downtime reduction, and efficiency improvement strategies",
-      duration: "2-6 months",
-      deliverables: ["Current state analysis", "ROI projections", "Implementation roadmap", "Training programs"]
-    },
-    {
-      service: "IoT & Smart Manufacturing Integration", 
-      description: "Sensor deployment, data pipeline design, and real-time monitoring dashboards",
-      duration: "3-8 months",
-      deliverables: ["IoT architecture design", "Cloud infrastructure setup", "Dashboard development", "Operator training"]
-    },
-    {
-      service: "AI-Powered Troubleshooting Systems",
-      description: "Custom LLM development for equipment diagnostics and maintenance guidance",
-      duration: "4-10 months", 
-      deliverables: ["Model development", "Training data curation", "Deployment strategy", "Performance metrics"]
-    },
-    {
-      service: "Supply Chain Digitization",
-      description: "Blockchain implementation, inventory optimization, and process automation",
-      duration: "6-12 months",
-      deliverables: ["Process mapping", "Technology roadmap", "Pilot implementation", "Scalability assessment"]
-    }
-  ];
+  // Combine existing and new testimonials
+  const allTestimonials = [...linkedinTestimonials, ...testimonials];
+  const featuredTestimonials = allTestimonials.slice(0, 5);
 
-  const availabilitySlots = [
-    { type: "Quick Consultation", duration: "30 minutes", description: "Initial discussion and problem assessment" },
-    { type: "Technical Deep Dive", duration: "60 minutes", description: "Detailed solution architecture and planning" },
-    { type: "Project Planning Session", duration: "90 minutes", description: "Comprehensive project scoping and roadmap development" }
-  ];
+
 
   return (
     <div className="min-h-screen bg-bg">
@@ -117,7 +137,9 @@ const Contact: React.FC = () => {
             Let's Collaborate
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to transform your manufacturing operations? Book a consultation or 
+            Ready to transform your <TechnicalTooltip term="Manufacturing Operations" definition="The complete set of activities involved in producing goods, from raw materials to finished products." example="Like running a restaurant kitchen - coordinating ingredients, equipment, staff, and processes to deliver quality meals efficiently." industry="Manufacturing" icon="🏭">
+              manufacturing operations
+            </TechnicalTooltip>? Let's discuss opportunities or 
             send a message to discuss your specific challenges and opportunities.
           </p>
         </motion.div>
@@ -166,9 +188,7 @@ const Contact: React.FC = () => {
                     <Mail className="w-5 h-5 text-primary" />
                     <div>
                       <div className="font-medium text-foreground">Email</div>
-                      <a href="mailto:ajithsrikanth.f@northeastern.edu" className="text-primary hover:underline">
-                        ajithsrikanth.f@northeastern.edu
-                      </a>
+                      <div className="text-muted-foreground">Contact via form below</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -182,7 +202,7 @@ const Contact: React.FC = () => {
                     <Calendar className="w-5 h-5 text-accent-2" />
                     <div>
                       <div className="font-medium text-foreground">Availability</div>
-                      <div className="text-muted-foreground">Full-time from May 2026</div>
+                      <div className="text-muted-foreground">Full-time from December 2026 | Pre-OPT on discussion</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -195,28 +215,6 @@ const Contact: React.FC = () => {
                 </div>
               </div>
 
-              {/* Consultation Options */}
-              <div className="bg-card border border-border rounded-xl p-6">
-                <h3 className="font-semibold text-foreground mb-4">Book a Consultation</h3>
-                <div className="space-y-3">
-                  {availabilitySlots.map((slot, index) => (
-                    <motion.a
-                      key={slot.type}
-                      href="https://calendly.com/d/cqp7-3p3-jwq/30-minute-meeting"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      className="block p-4 border border-border rounded-lg hover:bg-muted transition-colors"
-                    >
-                      <div className="flex justify-between items-start mb-1">
-                        <div className="font-medium text-foreground">{slot.type}</div>
-                        <div className="text-sm text-primary font-medium">{slot.duration}</div>
-                      </div>
-                      <div className="text-sm text-muted-foreground">{slot.description}</div>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
 
               {/* Newsletter */}
               <div className="bg-gradient-to-r from-accent-1/10 to-primary/10 border border-accent-1/20 rounded-xl p-6">
@@ -275,7 +273,7 @@ const Contact: React.FC = () => {
                 {/* Testimonial Navigation */}
                 <div className="lg:w-1/3">
                   <div className="space-y-3">
-                    {testimonials.map((testimonial, index) => (
+                    {featuredTestimonials.map((testimonial, index) => (
                       <motion.button
                         key={testimonial.name}
                         onClick={() => setActiveTestimonial(index)}
@@ -316,18 +314,18 @@ const Contact: React.FC = () => {
                   >
                     <Quote className="w-8 h-8 text-primary mb-4" />
                     <blockquote className="text-foreground leading-relaxed mb-6">
-                      "{testimonials[activeTestimonial].testimonial}"
+                      "{featuredTestimonials[activeTestimonial].content}"
                     </blockquote>
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-semibold text-foreground">
-                          {testimonials[activeTestimonial].name}
+                          {featuredTestimonials[activeTestimonial].name}
                         </div>
                         <div className="text-sm text-muted-foreground">
-                          {testimonials[activeTestimonial].title}
+                          {featuredTestimonials[activeTestimonial].title}
                         </div>
                         <div className="text-sm text-primary">
-                          {testimonials[activeTestimonial].company}
+                          {featuredTestimonials[activeTestimonial].company}
                         </div>
                       </div>
                       <motion.a
@@ -347,53 +345,6 @@ const Contact: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Consulting Services */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-16"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
-              Consulting Services Available
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {consultingServices.map((service, index) => (
-                <motion.div
-                  key={service.service}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -4 }}
-                  className="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-all"
-                >
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
-                    {service.service}
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center gap-2 mb-4">
-                    <Clock className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium text-primary">
-                      Timeline: {service.duration}
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground mb-2">Key Deliverables:</h4>
-                    <ul className="space-y-1">
-                      {service.deliverables.map((deliverable, idx) => (
-                        <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <CheckCircle className="w-3 h-3 text-accent-1 mt-1 flex-shrink-0" />
-                          {deliverable}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
 
           {/* Current Status & Next Steps */}
           <motion.div
@@ -440,15 +391,13 @@ const Contact: React.FC = () => {
 
               <div className="text-center">
                 <motion.a
-                  href="https://calendly.com/d/cqp7-3p3-jwq/30-minute-meeting"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/contact"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-contrast rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
                 >
-                  <Calendar className="w-5 h-5" />
-                  Book Your Consultation Now
+                  <MessageSquare className="w-5 h-5" />
+                  Get in Touch
                 </motion.a>
               </div>
             </div>

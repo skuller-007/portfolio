@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
   Download, 
@@ -21,6 +21,13 @@ import { profile } from '../data/profile';
 import Button from '../components/ui/Button';
 
 const Home: React.FC = () => {
+  // State for Namaskaram modal visibility
+  const [showNamaskaramModal, setShowNamaskaramModal] = useState(false);
+  
+  /**
+   * Smooth scroll to a section by ID
+   * @param sectionId - The ID of the section to scroll to
+   */
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -63,7 +70,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Background Pattern */}
@@ -86,11 +93,11 @@ const Home: React.FC = () => {
               className="mb-8"
             >
               <div className="relative mx-auto w-32 h-32 md:w-40 md:h-40 mb-6">
-                <div className="w-full h-full bg-gradient-to-br from-primary to-accent-1 rounded-full flex items-center justify-center shadow-xl">
-                  <span className="text-4xl md:text-5xl font-bold text-primary-contrast">
-                    {profile.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
+                <img 
+                  src="/profile-pic.png" 
+                  alt={profile.name}
+                  className="w-full h-full rounded-full object-cover shadow-xl border-4 border-primary/20"
+                />
                 <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-accent-1 rounded-full flex items-center justify-center shadow-lg">
                   <Award className="w-4 h-4 text-white" />
                 </div>
@@ -102,7 +109,35 @@ const Home: React.FC = () => {
               variants={itemVariants}
               className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6"
             >
-              Hi, I'm{' '}
+              <motion.span
+                className="relative group cursor-pointer select-none outline-none focus:outline-none"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                title="Click to learn about Namaskaram!"
+                onClick={() => {
+                  // Easter egg: Show Namaskaram meaning modal
+                  console.log('Namaskaram easter egg clicked');
+                  setShowNamaskaramModal(true);
+                }}
+                style={{ WebkitUserSelect: 'none', userSelect: 'none' }}
+              >
+                Namaskaram
+                <motion.span
+                  className="absolute -top-2 -right-2 text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.2, 1]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  🙏
+                </motion.span>
+              </motion.span>
+              , I'm{' '}
               <span className="bg-gradient-to-r from-primary to-accent-1 bg-clip-text text-transparent">
                 Ajith Srikanth
               </span>
@@ -127,49 +162,49 @@ const Home: React.FC = () => {
               <motion.div 
                 variants={achievementVariants}
                 whileHover={{ scale: 1.05 }}
-                className="bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
+                className="glass-card rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
               >
                 <div className="flex items-center justify-center mb-2">
                   <TrendingUp className="w-6 h-6 text-blue-500" />
                 </div>
                 <div className="text-2xl font-bold text-blue-600">83%</div>
-                <div className="text-sm text-muted-foreground">Downtime Reduction</div>
+                <div className="text-sm text-white/80">Downtime Reduction</div>
               </motion.div>
               
               <motion.div 
                 variants={achievementVariants}
                 whileHover={{ scale: 1.05 }}
-                className="bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
+                className="glass-card rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
               >
                 <div className="flex items-center justify-center mb-2">
                   <Target className="w-6 h-6 text-green-500" />
                 </div>
                 <div className="text-2xl font-bold text-green-600">₹9M</div>
-                <div className="text-sm text-muted-foreground">Annual Savings</div>
+                <div className="text-sm text-white/80">Annual Savings</div>
               </motion.div>
               
               <motion.div 
                 variants={achievementVariants}
                 whileHover={{ scale: 1.05 }}
-                className="bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
+                className="glass-card rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
               >
                 <div className="flex items-center justify-center mb-2">
                   <Zap className="w-6 h-6 text-purple-500" />
                 </div>
                 <div className="text-2xl font-bold text-purple-600">20%</div>
-                <div className="text-sm text-muted-foreground">Cycle Time Reduction</div>
+                <div className="text-sm text-white/80">Cycle Time Reduction</div>
               </motion.div>
               
               <motion.div 
                 variants={achievementVariants}
                 whileHover={{ scale: 1.05 }}
-                className="bg-card border border-border rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
+                className="glass-card rounded-xl p-4 shadow-lg hover:shadow-xl transition-all"
               >
                 <div className="flex items-center justify-center mb-2">
                   <Users className="w-6 h-6 text-orange-500" />
                 </div>
                 <div className="text-2xl font-bold text-orange-600">25+</div>
-                <div className="text-sm text-muted-foreground">Team Members Led</div>
+                <div className="text-sm text-white/80">Team Members Led</div>
               </motion.div>
             </motion.div>
 
@@ -460,7 +495,7 @@ const Home: React.FC = () => {
                 className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-contrast rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
               >
                 <Calendar className="w-5 h-5" />
-                Schedule a Consultation
+                Get in Touch
               </motion.a>
               <Button href="/contact" variant="outline" size="lg">
                 <Mail className="w-5 h-5 mr-2" />
@@ -470,6 +505,107 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Namaskaram Modal */}
+      <AnimatePresence>
+        {showNamaskaramModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowNamaskaramModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-white dark:bg-slate-800 rounded-2xl p-8 max-w-2xl w-full shadow-2xl border border-slate-200 dark:border-slate-700"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <motion.div
+                    className="text-4xl"
+                    animate={{ 
+                      rotate: [0, 10, -10, 0],
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    🙏
+                  </motion.div>
+                  <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
+                    Namaskaram
+                  </h2>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setShowNamaskaramModal(false)}
+                  className="text-slate-400 hover:text-slate-600 dark:hover:text-white text-2xl"
+                >
+                  ×
+                </motion.button>
+              </div>
+
+              {/* Content */}
+              <div className="space-y-4">
+                <div className="text-center mb-6">
+                  <div className="text-6xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
+                    नमस्कारम्
+                  </div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                    Sanskrit: Namaskaram
+                  </div>
+                </div>
+
+                <div className="prose prose-lg dark:prose-invert max-w-none">
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <strong>Namaskaram</strong> is a traditional Indian greeting that means 
+                    <em className="text-emerald-600 dark:text-emerald-400"> "I bow to the divine in you"</em> - 
+                    a respectful way to acknowledge the sacredness in every person.
+                  </p>
+                  
+                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                    It's more than just 'hello' - it's a recognition of the divine spark within each of us! 
+                    This greeting embodies the principle of seeing the sacred in everyone we meet.
+                  </p>
+
+                  <div className="bg-gradient-to-r from-emerald-50 to-cyan-50 dark:from-emerald-900/20 dark:to-cyan-900/20 rounded-lg p-4 mt-6">
+                    <h4 className="font-semibold text-slate-800 dark:text-white mb-2">
+                      Cultural Significance:
+                    </h4>
+                    <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-1">
+                      <li>• Represents respect and humility</li>
+                      <li>• Acknowledges the divine in others</li>
+                      <li>• Promotes equality and mutual respect</li>
+                      <li>• Common in South Indian culture</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-end mt-8">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowNamaskaramModal(false)}
+                className="px-6 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
+              >
+                Ajith Says Namaskaram! 🙏
+              </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -32,7 +32,7 @@ export interface Writing {
 
 // Load all projects from markdown files
 export async function loadProjects(): Promise<Project[]> {
-  const projectFiles = import.meta.glob('/content/projects/*.md', { eager: true });
+  const projectFiles = import.meta.glob('/content/projects/*.md', { eager: true }) as Record<string, { default: string }>;
   const projects: Project[] = [];
 
   for (const path in projectFiles) {
@@ -57,7 +57,7 @@ export async function loadProjects(): Promise<Project[]> {
 
 // Load all writing from markdown files
 export async function loadWriting(): Promise<Writing[]> {
-  const writingFiles = import.meta.glob('/content/writing/*.md', { eager: true });
+  const writingFiles = import.meta.glob('/content/writing/*.md', { eager: true }) as Record<string, { default: string }>;
   const writings: Writing[] = [];
 
   for (const path in writingFiles) {

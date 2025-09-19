@@ -19,9 +19,13 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   const navigation = [
+    { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Projects', href: '/projects' },
+    { name: 'Personal Interests', href: '/hobbies' },
     { name: 'Writings', href: '/writings' },
+    { name: 'Certifications', href: '/certifications' },
+    { name: 'Documents', href: '/documents' },
     { name: 'Contact', href: '/contact' }
   ];
 
@@ -55,37 +59,102 @@ const Header: React.FC = () => {
   }, [isSearchOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-bg/80 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-50 glass-nav border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 group">
             <motion.div
-              className="w-10 h-10 bg-gradient-to-br from-primary to-accent-1 rounded-lg flex items-center justify-center text-primary-contrast font-bold text-lg"
-              whileHover={{ scale: 1.05 }}
+              className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300 overflow-hidden"
+              whileHover={{ 
+                scale: 1.05,
+                rotate: [0, -5, 5, 0],
+                boxShadow: "0 10px 25px rgba(16, 185, 129, 0.3)"
+              }}
               whileTap={{ scale: 0.95 }}
             >
-              AS
+              <img 
+                src="/ManuFX.png" 
+                alt="ManuFX Logo" 
+                className="w-full h-full object-contain p-1"
+                onError={(e) => {
+                  // Fallback to initials if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = 'AS';
+                    parent.className = 'w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300';
+                  }
+                }}
+              />
             </motion.div>
-            <span className="text-xl font-bold text-foreground">
-              {profile.name}
-            </span>
+            <div className="flex flex-col">
+              <motion.span 
+                className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300"
+                whileHover={{ x: 2 }}
+              >
+                {profile.name}
+              </motion.span>
+              <motion.span 
+                className="text-xs text-slate-500 dark:text-slate-400 font-medium"
+                whileHover={{ x: 2 }}
+              >
+                ManuFX
+              </motion.span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
+          <nav className="hidden md:flex items-center space-x-2">
+            {navigation.map((item, index) => (
+              <motion.div
                 key={item.name}
-                to={item.href}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  location.pathname === item.href
-                    ? 'text-primary'
-                    : 'text-foreground hover:text-primary'
-                }`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
               >
-                {item.name}
-              </Link>
+                <Link
+                  to={item.href}
+                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 group ${
+                    location.pathname === item.href
+                      ? 'text-white bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-lg'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                  }`}
+                >
+                  <motion.span
+                    whileHover={{ 
+                      scale: 1.05,
+                      textShadow: location.pathname === item.href ? "0 0 8px rgba(16, 185, 129, 0.3)" : "0 0 4px rgba(16, 185, 129, 0.2)"
+                    }}
+                    className="relative z-10"
+                  >
+                    {item.name}
+                  </motion.span>
+                  {location.pathname === item.href && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-lg"
+                      layoutId="activeTab"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                  {/* Easter egg sparkle on hover */}
+                  <motion.div
+                    className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100"
+                    animate={{ 
+                      rotate: [0, 180, 360],
+                      scale: [0, 1, 0]
+                    }}
+                    transition={{ 
+                      duration: 0.6,
+                      repeat: Infinity,
+                      repeatDelay: 2
+                    }}
+                  >
+                    ✨
+                  </motion.div>
+                </Link>
+              </motion.div>
             ))}
           </nav>
 

@@ -54,7 +54,7 @@ const ThemeToggle: React.FC = () => {
       onClick={toggleTheme}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="w-10 h-10 rounded-lg bg-card border border-border flex items-center justify-center hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg"
+      className="w-10 h-10 rounded-lg glass-card flex items-center justify-center hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
       <motion.div
