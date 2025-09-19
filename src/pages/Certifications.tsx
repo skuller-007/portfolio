@@ -8,12 +8,10 @@ import {
   BookOpen,
   TrendingUp,
   Users,
-  Wrench,
   BarChart3,
   Shield,
   CheckCircle,
   ExternalLink,
-  Download,
   Target,
   Brain,
   Zap,
@@ -25,12 +23,8 @@ import {
   Settings,
   Gauge,
   Layers,
-  Workflow,
-  Cog,
-  Lightbulb,
-  Activity
 } from 'lucide-react';
-import { certificates, certificateCategories } from '../data/certificates';
+import { certificates } from '../data/certificates';
 
 const Certifications: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -177,7 +171,7 @@ const Certifications: React.FC = () => {
 
   const totalCertifications = allCertifications.length;
   const skillsoftCertifications = allCertifications.filter(cert => cert.provider === "Skillsoft").length;
-  const heroMotocorpCertifications = allCertifications.filter(cert => cert.provider === "Hero MotoCorp").length;
+  // const heroMotocorpCertifications = allCertifications.filter(cert => cert.provider === "Hero MotoCorp").length;
 
   return (
     <div className="min-h-screen bg-bg">

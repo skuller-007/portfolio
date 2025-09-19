@@ -3,10 +3,7 @@ import { motion } from 'framer-motion';
 import TechnicalTooltip from '../components/TechnicalTooltip';
 import { 
   GraduationCap,
-  Briefcase,
-  Code,
   Users,
-  TrendingUp,
   Award,
   BookOpen,
   Lightbulb,
