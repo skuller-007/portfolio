@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'framer-motion';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Components
 import Header from './components/Header';
@@ -52,6 +53,7 @@ function App() {
             </AnimatePresence>
           </main>
           <Footer />
+          <SpeedInsights />
         </div>
       </Router>
     </HelmetProvider>
