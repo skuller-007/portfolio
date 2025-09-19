@@ -1,0 +1,145 @@
+/* Color tokens for light and dark themes */
+:root {
+  --bg: #ffffff;
+  --fg: #0e1116;
+  --muted: #5f6b7a;
+  --primary: #0ea5e9; /* blue */
+  --primary-contrast: #ffffff;
+  --accent-1: #22c55e; /* green */
+  --accent-2: #ef4444; /* red */
+  --card: #f8fafc;
+  --border: #e5e7eb;
+  --muted-foreground: #64748b;
+  --foreground: #0f172a;
+}
+
+:root.dark {
+  --bg: #0b0f14;
+  --fg: #e5e7eb;
+  --muted: #9aa4b2;
+  --primary: #38bdf8;
+  --primary-contrast: #0b0f14;
+  --accent-1: #34d399;
+  --accent-2: #f87171;
+  --card: #0f141b;
+  --border: #1f2937;
+  --muted-foreground: #94a3b8;
+  --foreground: #f1f5f9;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility classes using CSS variables */
+.bg-bg { background-color: var(--bg); }
+.bg-card { background-color: var(--card); }
+.bg-primary { background-color: var(--primary); }
+.bg-accent-1 { background-color: var(--accent-1); }
+.bg-accent-2 { background-color: var(--accent-2); }
+.bg-muted { background-color: var(--muted); }
+
+.text-fg { color: var(--fg); }
+.text-foreground { color: var(--foreground); }
+.text-primary { color: var(--primary); }
+.text-accent-1 { color: var(--accent-1); }
+.text-accent-2 { color: var(--accent-2); }
+.text-muted { color: var(--muted); }
+.text-muted-foreground { color: var(--muted-foreground); }
+.text-primary-contrast { color: var(--primary-contrast); }
+
+.border-border { border-color: var(--border); }
+.border-primary { border-color: var(--primary); }
+.border-accent-1 { border-color: var(--accent-1); }
+.border-accent-2 { border-color: var(--accent-2); }
+
+/* Hover states */
+.hover\:bg-muted:hover { background-color: var(--muted); }
+.hover\:bg-primary\/90:hover { background-color: color-mix(in srgb, var(--primary) 90%, transparent); }
+.hover\:text-primary:hover { color: var(--primary); }
+
+/* Focus states */
+.focus\:ring-primary:focus { 
+  box-shadow: 0 0 0 2px var(--primary); 
+}
+.focus\:ring-offset-bg:focus { 
+  box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px var(--bg); 
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--card);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+}
+
+/* Print styles */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --card: #ffffff;
+    --border: #000000;
+  }
+  
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
